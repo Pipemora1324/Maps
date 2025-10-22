@@ -1,7 +1,7 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  turbopack: {}, // Esto silencia el error y usa Turbopack
+}
 
-export default nextConfig;
+export default nextConfig
