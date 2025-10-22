@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import dynamic from "next/dynamic";
 
 // Carga dinámica del mapa (evita error SSR en Next.js)
@@ -10,17 +10,14 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
 });
 
 export default function RunningTracker() {
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [routePoints, setRoutePoints] = useState<[number, number][]>([]);
 
   const isDark = useMemo(() => {
-    if (theme === "system") {
-      if (typeof window !== "undefined") {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches;
-      }
-      return false;
+    if (typeof window !== "undefined") {
+      return theme === "dark";
     }
-    return theme === "dark";
+    return false;
   }, [theme]);
 
   const handleMapClick = (latlng: { lat: number; lng: number }) => {
@@ -59,20 +56,6 @@ export default function RunningTracker() {
             }`}
           >
             <Moon size={20} />
-          </button>
-          <button
-            onClick={() => setTheme("system")}
-            className={`p-2 rounded-lg transition-colors ${
-              theme === "system"
-                ? isDark
-                  ? "bg-gray-700 text-blue-400"
-                  : "bg-amber-200 text-amber-900"
-                : isDark
-                ? "bg-gray-800 text-gray-400"
-                : "bg-white text-gray-600"
-            }`}
-          >
-            <Monitor size={20} />
           </button>
         </section>
 
@@ -126,29 +109,20 @@ export default function RunningTracker() {
           <section className="px-6 pb-6">
             <section className="bg-gray-900 rounded-3xl p-6 flex items-center gap-6">
               <span className="bg-gray-800 p-4 rounded-2xl">
+                {/* 🏃‍♂️ Icono de tenis/corredor */}
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   width="48"
                   height="48"
-                  viewBox="0 0 48 48"
+                  viewBox="0 0 24 24"
                   fill="none"
                   stroke="white"
                   strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  <path
-                    d="M8 24h6l3-6 4 12 4-12 3 6h6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <ellipse
-                    cx="35"
-                    cy="30"
-                    rx="8"
-                    ry="4"
-                    fill="white"
-                    stroke="white"
-                  />
-                  <path d="M27 30c0-2 3-4 8-4s8 2 8 4" strokeLinecap="round" />
-                  <circle cx="12" cy="18" r="2" fill="white" />
+                  <path d="M9 2l2 2-2 4 4 1 1-3 3 2-2 4 2 3-3 6-2-1 1-4-4-2-3 3-2-2 4-5-1-5z" />
+                  <circle cx="16" cy="4" r="2" fill="white" />
                 </svg>
               </span>
               <span className="flex-1">
