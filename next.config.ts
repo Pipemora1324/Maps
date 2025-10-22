@@ -1,7 +1,10 @@
-import type { NextConfig } from 'next'
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    appDir: true
+  },
+  output: 'standalone'
+};
 
-const nextConfig: NextConfig = {
-  turbopack: {}, // Esto silencia el error y usa Turbopack
-}
-
-export default nextConfig
+module.exports = nextConfig;
